@@ -5,13 +5,13 @@ const Navbar = () => {
     const navLink = <>
         <li className='hover:text-white font-semibold hover:bg-primary rounded-lg '><Link>Home</Link></li>
         <li className='hover:text-white font-semibold hover:bg-primary rounded-lg '><Link>About</Link></li>
-        <li className='hover:text-white font-semibold hover:bg-primary rounded-lg '><Link>Services</Link></li>
+        <li className='hover:text-white font-semibold hover:bg-primary rounded-lg '><Link to='/addJob'>Add Job</Link></li>
         <li className='hover:text-white font-semibold hover:bg-primary rounded-lg '><Link>Blog</Link></li>
         <li className='hover:text-white font-semibold hover:bg-primary rounded-lg '><Link>Contact</Link></li>
     </>
     return (
         <>
-            <div className="navbar">
+            <div className="navbar h-[80px]">
                 <div className="navbar-start">
                     <div className="dropdown">
                         <label tabIndex={0} className="btn btn-ghost lg:hidden">
