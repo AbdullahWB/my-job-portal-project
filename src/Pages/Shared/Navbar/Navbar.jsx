@@ -1,7 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../../Provider/AuthProvider';
 
 const Navbar = () => {
+    const { user, LogOut } = useContext(AuthContext)
+
+    const handleLogout = () => {
+        LogOut()
+            .then()
+            .catch(error => {
+                console.log(error);
+            })
+    }
     const navLink = <>
         <li className='hover:text-white font-semibold hover:bg-primary rounded-lg '><Link>Home</Link></li>
         <li className='hover:text-white font-semibold hover:bg-primary rounded-lg '><Link>About</Link></li>
@@ -19,9 +29,12 @@ const Navbar = () => {
                         </label>
                         <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
                             {navLink}
+                            {
+                                user ? <Link to='/' onClick={handleLogout} className="btn hidden md:flex btn-primary text-white">Logout</Link> : <Link to='/login' className="btn btn-primary text-white">Login</Link>
+                            }
                         </ul>
                     </div>
-                    <a className="btn btn-ghost font-bold text-primary text-xl ">Your Job</a>
+                    <Link to='/' className="btn btn-ghost font-bold text-primary text-xl ">Your Job</Link>
                 </div>
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1">
@@ -29,7 +42,9 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <Link to='/' className="btn btn-primary text-white">Login</Link>
+                    {
+                        user ? <Link to='/' onClick={handleLogout} className="btn hidden md:flex btn-primary text-white">Logout</Link> : <Link to='/login' className="btn btn-primary text-white">Login</Link>
+                    }
                 </div>
             </div>
         </>
