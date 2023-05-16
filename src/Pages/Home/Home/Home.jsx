@@ -1,9 +1,12 @@
 import React from 'react';
+import Navbar from '../../Shared/Navbar/Navbar';
+import Banner from '../../Shared/Banner/Banner';
 
 const Home = () => {
     return (
         <div>
-            this is home
+            <Navbar></Navbar>
+            <Banner></Banner>
         </div>
     );
 };
