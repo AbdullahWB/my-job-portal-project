@@ -1,13 +1,27 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from "react-hook-form";
 import Select from 'react-select';
 import CreatableSelect from "react-select/creatable";
+import { AuthContext } from '../../Provider/AuthProvider';
+import { Result } from 'postcss';
 
 const AddJob = () => {
+    const { user } = useContext(AuthContext)
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const [selectedOption, setSelectedOption] = useState(null);
     const onSubmit = (data) => {
         data.skills = selectedOption;
+        fetch("http://localhost:3000/postJob", {
+            method: "POST",
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(res => res.json())
+            .then(result => {
+                console.log(result);
+            })
         console.log(data);
     }
     const options = [
@@ -19,7 +33,7 @@ const AddJob = () => {
         { value: "Node", label: "Node" },
         { value: "MongoDB", label: "MongoDB" },
         { value: "Redux", label: "Redux" },
-      ];
+    ];
     return (
         <div className='mt-[100px]'>
             <form className='bg-[rgba(0,166,172,0.1)] rounded-lg p-20' onSubmit={handleSubmit(onSubmit)}>
@@ -47,10 +61,10 @@ const AddJob = () => {
                         type="number"
                     />
                     <select className="input w-full border border-primary" {...register("category")}>
-                        <option value="Engineering">engineering</option>
-                        <option value="Editor">Editor</option>
-                        <option value="writer">Writer</option>
-                        <option value="Developer">Developer</option>
+                        <option value="Engineering">Database Developer</option>
+                        <option value="Editor">IOS Developer</option>
+                        <option value="writer">Android Developer</option>
+                        <option value="Developer">Web Developer</option>
                     </select>
                     <select className="input w-full border border-primary" {...register("status")}>
                         <option value="remote">Remote</option>
@@ -73,7 +87,7 @@ const AddJob = () => {
                     />
                     <input
                         className="input w-full border border-primary"
-                        value='abdullah917828@gmail.com'
+                        value={user?.email}
                         {...register("postedBy")}
                         placeholder="your email"
                         type="email"
